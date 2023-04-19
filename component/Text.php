@@ -1,6 +1,6 @@
 <?php
 
-namespace IFaqih\Component;
+namespace IFaqih\IFEncryption\Component;
 
 use IFaqih\Component\Main;
 

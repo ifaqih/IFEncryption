@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../src/Encryption.php";
 
-use IFaqih\Library\Encryption;
+use IFaqih\IFEncryption\Encryption;
 
 $password = "kmzway87aa";
 $bcrypt = Encryption::password(PASSWORD_BCRYPT, ['cost' => 14, 'salt_cost' => 'kmzway87aa'])->encrypt($password);
