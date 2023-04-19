@@ -5,7 +5,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "IFaqih\\library\\IFEncryption\\": "src/"
+      "IFaqih\\IFEncryption\\": "src/"
     }
   },
   "authors": [
@@ -22,7 +22,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "IFaqih\\Library\\IFEncryption\\ServiceProvider"
+        "IFaqih\\IFEncryption\\ServiceProvider"
       ]
     }
   }
