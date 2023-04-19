@@ -2,7 +2,7 @@
 
 namespace IFaqih\IFEncryption\Component;
 
-use IFaqih\Component\Main;
+use IFaqih\IFEncryption\Component\Main;
 
 class IFText
 {
