@@ -4,11 +4,14 @@ namespace IFaqih\IFEncryption;
 
 require_once __DIR__ . "/../component/Void.php";
 
+use IFaqih\IFEncryption\Component\IFPassword;
+use IFaqih\IFEncryption\Component\IFText;
+
 class Encryption
 {
     public static function password(string|int|null $algo = null, array $options = []): object
     {
-        return new \IFaqih\IFEncryption\Component\IFPassword([
+        return new IFPassword([
             'use'       =>  $algo,
             'options'   =>  $options
         ]);
@@ -16,6 +19,6 @@ class Encryption
 
     public static function text(array $config = [])
     {
-        return new \IFaqih\IFEncryption\Component\IFText($config);
+        return new IFText($config);
     }
 }
