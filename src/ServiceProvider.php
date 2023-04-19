@@ -1,6 +1,6 @@
 <?php
 
-namespace IFaqih\Library\IFEncryption;
+namespace IFaqih\Library;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 

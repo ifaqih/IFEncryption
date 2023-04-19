@@ -22,7 +22,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "IFaqih\\Library\\IFEncryption\\ServiceProvider"
+        "IFaqih\\Library\\ServiceProvider"
       ]
     }
   }
