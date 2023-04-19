@@ -12,16 +12,9 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
  */
 class ServiceProvider extends BaseServiceProvider
 {
-    /**
-     * Register the custom blade directives.
-     *
-     * @inheritDoc
-     *
-     * @return void
-     */
+
     public function boot(): void
     {
-        $this->registerDirectives();
 
         $source = realpath($raw = __DIR__ . '/../config/if-encryption.php') ?: $raw;
 
@@ -37,8 +30,5 @@ class ServiceProvider extends BaseServiceProvider
 
     public function register(): void
     {
-        $this->app->singleton('if-encryption', function ($app) {
-            return new Parser($app->make('cache'), $app->make('request'), $app->make('config')['if-encryption'] ?? []);
-        });
     }
 }
