@@ -1,0 +1,12 @@
+
+<Files "index.html">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+Options -Indexes
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [R=404,L]
+ErrorDocument 404 "<h1>Not Found</h1><p>The requested URL was not found on this server.</p>"
