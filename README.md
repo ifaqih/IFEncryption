@@ -807,7 +807,7 @@ var_dump([
 ]);
 ```
 
--result:
+- result:
 
 ```h
 array(5) {
