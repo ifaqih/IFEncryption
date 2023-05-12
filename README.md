@@ -77,7 +77,6 @@ class::set_algo()
 - Type: `static`
 - Parameter data type: `string $algo`
 - Return data type: `object`
-  |-
 
 ### Set Random Algorithm
 
@@ -90,7 +89,6 @@ class::set_rand_algo()
 - Type: `static`
 - Parameter data type: `array $algo`
 - Return data type: `object`
-  |-
 
 ### Set Default Options
 
@@ -103,7 +101,6 @@ class::set_default_options()
 - Type: `static`
 - Parameter data type: no parameter
 - Return data type: `object`
-  |-
 
 ### Set Options
 
@@ -116,7 +113,6 @@ class::set_options()
 - Type: `non-static`
 - Parameter data type: `array $options`
 - Return data type: `object`
-  |-
 
 ### Set Time Cost
 
@@ -129,7 +125,6 @@ class::time_cost()
 - Type: `non-static`
 - Parameter data type: `int $time_cost`
 - Return data type: `object`
-  |-
 
 _[this class method only applies if you use ARGON2I and ARGON2ID algorithms]_
 
@@ -144,7 +139,6 @@ class::memory_cost()
 - Type: `non-static`
 - Parameter data type: `int $memory_cost`
 - Return data type: `object`
-  |-
 
 _[this class method only applies if you use ARGON2I and ARGON2ID algorithms]_
 
@@ -159,7 +153,6 @@ class::threads()
 - Type: `non-static`
 - Parameter data type: `int $threads`
 - Return data type: `object`
-  |-
 
 _[this class method only applies if you use ARGON2I and ARGON2ID algorithms]_
 
@@ -174,7 +167,6 @@ class::cost()
 - Type: `non-static`
 - Parameter data type: `int $cost`
 - Return data type: `object`
-  |-
 
 _[this class method only applies if you use the BCRYPT algorithm]_
 
@@ -189,7 +181,6 @@ class::encrypt()
 - Type: `static`
 - Parameter data type: `string $str`
 - Return data type: `string|false`
-  |-
 
 ### Verify Encryption
 
@@ -202,7 +193,6 @@ class::verify()
 - Type: `static`
 - Parameter data type: `string $str, string $existingHash, bool $rehash = TRUE`
 - Return data type: `bool`
-  |-
 
 ### Get New Hash
 
@@ -215,7 +205,6 @@ class::new_hash()
 - Type: `static`
 - Parameter data type: no parameter
 - Return data type: `string|null`
-  |-
 
 ### Get Details Encryption
 
@@ -228,7 +217,6 @@ class::get_details()
 - Type: `static`
 - Parameter data type: no parameter
 - Return data type: `object`
-  |-
 
 ### Get Algorithm Data
 
@@ -241,7 +229,6 @@ class::get_algo()
 - Type: `static`
 - Parameter data type: no parameter
 - Return data type: `object`
-  |-
 
 ### Get Option Data
 
@@ -254,7 +241,6 @@ class::get_options()
 - Type: `static`
 - Parameter data type: no parameter
 - Return data type: `object`
-  |-
 
 ## Example
 
