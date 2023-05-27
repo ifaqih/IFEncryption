@@ -2,10 +2,9 @@
 
 namespace IFaqih\IFEncryption;
 
-use IFaqih\IFEncryption\Component\Password\Main;
-
-
 require_once __DIR__ . "/../component/Void.php";
+
+use IFaqih\IFEncryption\Component\Password\Main;
 
 class Password extends Main
 {
