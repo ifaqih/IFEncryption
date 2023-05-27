@@ -25,34 +25,33 @@ class Testing
         $error = array();
 
         for ($i = 0; $i < static::$count; $i++) {
-            $test = Password::set_rand_algo([
+            $str = $this->rand_str();
+            $hash = Password::set_rand_algo([
                 [
                     'algo'      =>  PASSWORD_BCRYPT,
                     'options'   =>  [
-                        'cost'      =>  7
+                        'cost'      =>  4
                     ]
                 ],
                 [
                     'algo'      =>  PASSWORD_ARGON2I,
                     'options'   =>  [
-                        'time_cost'     =>  3,
-                        'memory_cost'   =>  128,
-                        'threads'       =>  4
+                        'time_cost'     =>  11,
+                        'memory_cost'   =>  10240,
+                        'threads'       =>  8
                     ]
                 ],
                 [
                     'algo'      =>  PASSWORD_ARGON2ID,
                     'options'   =>  [
-                        'time_cost'     =>  3,
-                        'memory_cost'   =>  128,
-                        'threads'       =>  4
+                        'time_cost'     =>  11,
+                        'memory_cost'   =>  10240,
+                        'threads'       =>  8
                     ]
                 ]
-            ]);
-            $str = $this->rand_str();
-            $hash = $test->encrypt($str);
+            ])->hash($str);
 
-            if (Password::verify($str, $hash, FALSE)) {
+            if (Password::verify($str, $hash, DONT_REHASH)) {
                 $count_t++;
                 switch (Password::get_algo()->algo) {
                     case PASSWORD_BCRYPT:
@@ -71,6 +70,7 @@ class Testing
                 $error[] = [
                     "algo"      =>  Password::get_algo()->algo,
                     "string"    =>  $str,
+                    "hash"      =>  $hash,
                     "iteration" =>  $i + 1
                 ];
             }
@@ -91,8 +91,10 @@ class Testing
     }
 }
 
+$start = microtime(true);
 $test = new Testing(1000);
 
 echo "<pre>";
 var_dump($test->strat());
+var_dump((microtime(true) - $start));
 echo "</pre>";

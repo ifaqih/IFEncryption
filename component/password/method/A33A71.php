@@ -42,7 +42,7 @@ class A33A71 extends AbstractMethod
 
         static::$options['options'] = $options;
 
-        return $this;
+        return self::getInstance();
     }
 
     /**
@@ -54,7 +54,7 @@ class A33A71 extends AbstractMethod
      * @method \IFaqih\IFEncryption\Component\Password\Method\AbstractMethod set_options(array $options): object
      * @method \IFaqih\IFEncryption\Component\Password\Method\A33A71 memory_cost(int $memory_cost): object
      * @method \IFaqih\IFEncryption\Component\Password\Method\A33A71 threads(int $threads): object
-     * @method \IFaqih\IFEncryption\Component\Password\Main encrypt(string $str): string|false
+     * @method \IFaqih\IFEncryption\Component\Password\Main hash(string $str): string|false
      */
     public function time_cost(int $time_cost): object
     {
@@ -81,7 +81,7 @@ class A33A71 extends AbstractMethod
      * @method \IFaqih\IFEncryption\Component\Password\Method\A17 cost(int $cost): object
      * @method \IFaqih\IFEncryption\Component\Password\Method\A33A71 time_cost(int $time_cost): object
      * @method \IFaqih\IFEncryption\Component\Password\Method\A33A71 threads(int $threads): object
-     * @method \IFaqih\IFEncryption\Component\Password\Main encrypt(string $str): string|false
+     * @method \IFaqih\IFEncryption\Component\Password\Main hash(string $str): string|false
      */
     public function memory_cost(int $memory_cost): object
     {
@@ -108,7 +108,7 @@ class A33A71 extends AbstractMethod
      * @method \IFaqih\IFEncryption\Component\Password\Method\A17 cost(int $cost): object
      * @method \IFaqih\IFEncryption\Component\Password\Method\A33A71 time_cost(int $time_cost): object
      * @method \IFaqih\IFEncryption\Component\Password\Method\A33A71 memory_cost(int $memory_cost): object
-     * @method \IFaqih\IFEncryption\Component\Password\Main encrypt(string $str): string|false
+     * @method \IFaqih\IFEncryption\Component\Password\Main hash(string $str): string|false
      */
     public function threads(int $threads): object
     {

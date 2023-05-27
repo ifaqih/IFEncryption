@@ -25,5 +25,8 @@
         "IFaqih\\IFEncryption\\ServiceProvider"
       ]
     }
+  },
+  "scripts": {
+    "post-package-uninstall": "php artisan vendor:publish --tag=if-encryption-config --force && php artisan config:clear"
   }
 }

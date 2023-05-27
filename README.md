@@ -1,6 +1,6 @@
 # IFEncryption
 
-IFEncryption is a simple library that serves to disguise the algorithm method along with options from the password_hash function in php.
+IFEncryption is a simple library that serves to disguise the algorithm method along with options from [the password_hash function in php](https://www.php.net/manual/en/function.password-hash.php).
 
 PHP Version: 8.0 or above
 |-
@@ -64,6 +64,39 @@ then select IFaqih\IFEncryption\ServiceProvider
 ]
 ```
 
+## Constants
+
+All the constants used by this library.
+
+### PHP Default Constants
+
+Existing constants from php:
+
+| Constant Name                         | Value        | Description                                                                                                                                                                          |
+| ------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `PASSWORD_BCRYPT`                     | `"2y"`       | Use the [CRYPT_BLOWFISH algorithm](https://www.php.net/security/crypt_blowfish) to create the hash                                                                                   |
+| `PASSWORD_ARGON2I`                    | `"argon2i"`  | Use the [Argon2i hashing algorithm](https://wiki.php.net/rfc/argon2_password_hash) to create the hash. This algorithm is only available if PHP has been compiled with Argon2 support |
+| `PASSWORD_ARGON2ID`                   | `"argon2id"` | Use the Argon2id hashing algorithm to create the hash. This algorithm is only available if PHP has been compiled with Argon2 support                                                 |
+| `PASSWORD_BCRYPT_DEFAULT_COST`        | `10`         | Default cost set by php                                                                                                                                                              |
+| `PASSWORD_ARGON2_DEFAULT_MEMORY_COST` | `65536`      | Default memory cost set by php                                                                                                                                                       |
+| `PASSWORD_ARGON2_DEFAULT_TIME_COST`   | `4`          | Default time cost set by php                                                                                                                                                         |
+| `PASSWORD_ARGON2_DEFAULT_THREADS`     | `1`          | Default threads set by php                                                                                                                                                           |
+
+### Constants Added By The Library
+
+Additional constants to support this library:
+
+| Constant Name            | Value | Description                                                              |
+| ------------------------ | ----- | ------------------------------------------------------------------------ |
+| `DONT_REHASH`            | `1`   | Rehashing will not be performed                                          |
+| `REHASH_FIXED`           | `2`   | Will perform rehashing based on available hashes                         |
+| `REHASH_CONFIG`          | `4`   | Will perform rehashing based on the configuration that has been set      |
+| `REHASH_BCRYPT`          | `8`   | Will perform rehashing using the CRYPT_BLOWFISH algorithm                |
+| `REHASH_ARGON2I`         | `16`  | Will perform rehashing using the Argon2i algorithm                       |
+| `REHASH_ARGON2ID`        | `32`  | Will perform rehashing using the Argon2id algorithm                      |
+| `REHASH_RAND_ALL_ALGO`   | `64`  | Will perform the rehashing using one of all randomly selected algorithms |
+| `REHASH_DEFAULT_OPTIONS` | `128` | Will do rehashing with default options from php                          |
+
 ## Class Methods
 
 ### Set Algorithm
@@ -126,7 +159,7 @@ class::time_cost()
 - Parameter data type: `int $time_cost`
 - Return data type: `object`
 
-_[this class method only applies if you use ARGON2I and ARGON2ID algorithms]_
+_this class method only applies if you use ARGON2I and ARGON2ID algorithms_
 
 ### Set Memory Cost
 
@@ -140,7 +173,7 @@ class::memory_cost()
 - Parameter data type: `int $memory_cost`
 - Return data type: `object`
 
-_[this class method only applies if you use ARGON2I and ARGON2ID algorithms]_
+_this class method only applies if you use ARGON2I and ARGON2ID algorithms_
 
 ### Set Threads
 
@@ -154,7 +187,7 @@ class::threads()
 - Parameter data type: `int $threads`
 - Return data type: `object`
 
-_[this class method only applies if you use ARGON2I and ARGON2ID algorithms]_
+_this class method only applies if you use ARGON2I and ARGON2ID algorithms_
 
 ### Set Cost
 
@@ -168,21 +201,21 @@ class::cost()
 - Parameter data type: `int $cost`
 - Return data type: `object`
 
-_[this class method only applies if you use the BCRYPT algorithm]_
+_this class method only applies if you use the BCRYPT algorithm_
 
-### Execute Encryption
+### Execute Hashing
 
-Execute the encryption command according to the algorithm and options that have been set.
+Executes hashing according to predefined algorithms and options.
 
 ```php
-class::encrypt()
+class::hash()
 ```
 
 - Type: `static`
 - Parameter data type: `string $str`
 - Return data type: `string|false`
 
-### Verify Encryption
+### Verify Hash
 
 Verify string with existing hash.
 
@@ -191,8 +224,10 @@ class::verify()
 ```
 
 - Type: `static`
-- Parameter data type: `string $str, string $existingHash, bool $rehash = TRUE`
+- Parameter data type: `string $str, string $existingHash, int $rehash_flag = REHASH_FIXED`
 - Return data type: `bool`
+
+_additional constants are useful as rehash flags in the verify() method_
 
 ### Get New Hash
 
@@ -206,9 +241,9 @@ class::new_hash()
 - Parameter data type: no parameter
 - Return data type: `string|null`
 
-### Get Details Encryption
+### Get Details Hash
 
-Get encryption data details.
+Get details of hash data.
 
 ```php
 class::get_details()
@@ -255,7 +290,7 @@ $password = "@QweRty17@";
 
 $hash = Password::set_algo(PASSWORD_BCRYPT)
     ->cost(10)
-    ->encrypt($password);
+    ->hash($password);
 
 $verify = Password::verify($password, $hash);
 
@@ -279,13 +314,13 @@ array(5) {
   ["password"]=>
   string(10) "@QweRty17@"
   ["hash"]=>
-  string(94) "$if-1$a17$1$fs9iKTE8fal5mmUkHkGRtwVjRVPQ$FHtbkJ4TMz5GAOA.zBfqA.lLXnGVJtbNuPHmivnxN8mqrjuRSjIR2"
+  string(121) "$if-1$a17$1$UD3E+NwLQiO8RbdGZNkVhx8t14raoWkj7lP5BgVEVn$atg51mU6+V.n408Lm2DRq4$sL7kYzAGp/vOGt7sO6NafIvJ4RmJ6iYd30qMIou9nRC"
   ["new_hash"]=>
-  string(94) "$if-1$a17$1$SEHSn2yIxum4tFHoJJW8DgUnNVPQ$l0oD4gJO5zvQj.cePu9yD.btzAc.MUy9LvUbh25GNOYStpU7YQvWm"
+  string(121) "$if-1$a17$1$Vxws1l2U9jvnFOQDP5hWYtmJdsUIfod9MOuYYwWnk4$zyVrWCU80aKx0cOfzoCfR2$XNTmbEHnmXk.7r2t4opG5vl75wf.UWUyStOb1043ym2"
   ["verify"]=>
   bool(true)
   ["details"]=>
-  object(stdClass)#1 (6) {
+  object(stdClass)#2 (6) {
     ["library_name"]=>
     string(12) "IFEncryption"
     ["version"]=>
@@ -297,7 +332,7 @@ array(5) {
     ["algo_alias"]=>
     string(3) "a17"
     ["options"]=>
-    object(stdClass)#2 (1) {
+    object(stdClass)#1 (1) {
       ["cost"]=>
       string(2) "10"
     }
@@ -314,9 +349,9 @@ $password = "@QweRty17@";
 
 $hash = Password::set_algo(PASSWORD_ARGON2ID)
     ->time_cost(7)
-    ->memory_cost(128)
-    ->threads(1)
-    ->encrypt($password);
+    ->memory_cost(512)
+    ->threads(2)
+    ->hash($password);
 
 $verify = Password::verify($password, $hash);
 
@@ -340,13 +375,13 @@ array(5) {
   ["password"]=>
   string(10) "@QweRty17@"
   ["hash"]=>
-  string(123) "$if-1$a71$1$eX7TAUjiDI/Yjb9BhlyBoQVjErWlptdU50Q28rcUE9PQ$cS5nVXBIQUQvWVdOLkxsQQ$CApfsEpKFtiHc4rIIAjK0ylcN6Yyj+2KuF2VDGMti1g"
+  string(121) "$if-1$a71$1$2zgzrE78uooXLI5lCDT3bANWRBbTJDUzA1VENmbUE9$VGJZUDh1VnE3QU5XOElXbA$N7W5M3KvPFCX7b6rh9K7q/9Prx8MqAWvzvrPp0AE6k4"
   ["new_hash"]=>
-  string(123) "$if-1$a71$1$x0myZUtO6jpVMNm7HtcEnQRjJOa09SQ0p1eW1tVkE9PQ$QVdCbVBwREZ0cWIuWFBiTQ$ZloK+r2nNYhU/M5KsuNWcAPduqHGbS63tfEuhziEcTI"
+  string(121) "$if-1$a71$1$9VxzqiVFYc3+H62OdrCttQeVVRczVwY3l6YmZxR3c9$eFVadXAzYjNxMU8wZmJ1OQ$P4794BWMmQ8mrmrRFQ8a64PB9dVx1e9ZdD1UeAcpWeM"
   ["verify"]=>
   bool(true)
   ["details"]=>
-  object(stdClass)#1 (6) {
+  object(stdClass)#4 (6) {
     ["library_name"]=>
     string(12) "IFEncryption"
     ["version"]=>
@@ -358,13 +393,13 @@ array(5) {
     ["algo_alias"]=>
     string(3) "a71"
     ["options"]=>
-    object(stdClass)#2 (3) {
+    object(stdClass)#3 (3) {
       ["time_cost"]=>
       string(1) "7"
       ["memory_cost"]=>
-      string(3) "128"
+      string(3) "512"
       ["threads"]=>
-      string(1) "1"
+      string(1) "2"
     }
   }
 }
@@ -381,11 +416,11 @@ $password = "@QweRty17@";
 
 $hash = Password::set_algo(PASSWORD_ARGON2ID)
     ->set_options([
-        'time_cost'     =>  3,
+        'time_cost'     =>  11,
         'memory_cost'   =>  128,
-        'threads'       =>  1
+        'threads'       =>  2
     ])
-    ->encrypt($password);
+    ->hash($password);
 
 $verify = Password::verify($password, $hash);
 
@@ -412,13 +447,13 @@ array(6) {
   ["password"]=>
   string(10) "@QweRty17@"
   ["hash"]=>
-  string(123) "$if-1$a71$1$azlQgtVORNtnTFGpc0xK2gUGdEc2lSenF2bm5RakE9PQ$MFlObXQuUXZVbFYuSElzMA$ZW6s01RZsuOgY9HiyiNpaxl7v838kGjpuEDFyOYzzDQ"
+  string(121) "$if-1$a71$1$tiq/kvy2YYvcrZpjmP7VUANG1hWEtlYUpXQmpmUHpz$V1VyMEI3anc3cFlYZUFDVw$T2NS4hBRy5WABU8M9hikIQUG5xLisv85lcRZUpWeN10"
   ["new_hash"]=>
-  string(123) "$if-1$a71$1$n19VRHtG5J+ryTg1loreiwdzBFN3dwS3VGSXczVkE9PQ$WElhNjhsMC5yT3RCYXladQ$xSTSBiTgJZjpo47glV4OwQJk8pSiaRqb6QGuDJGQ46Q"
+  string(121) "$if-1$a71$1$pgrPfa7+kORMJVSaWm1PZgb0s4ZWNoaFFCNDI3VjZz$QUk3a1lDL09nNkNxTDUwYg$kL15qrG1QcYp0NE2axbwbcaQGzqHckx7f4X8oZxljC0"
   ["verify"]=>
   bool(true)
   ["algo"]=>
-  object(stdClass)#1 (3) {
+  object(stdClass)#3 (3) {
     ["algo_name"]=>
     string(8) "ARGON2ID"
     ["algo"]=>
@@ -427,13 +462,13 @@ array(6) {
     string(3) "a71"
   }
   ["options"]=>
-  object(stdClass)#2 (3) {
+  object(stdClass)#1 (3) {
     ["time_cost"]=>
-    string(1) "3"
+    string(2) "11"
     ["memory_cost"]=>
     string(3) "128"
     ["threads"]=>
-    string(1) "1"
+    string(1) "2"
   }
 }
 ```
@@ -472,13 +507,13 @@ $hash = Password::set_rand_algo([
             'threads'       =>  1
         ]
     ]
-])->encrypt($password);
+])->hash($password);
 
 var_dump([
     "password"  =>  $password,
     "hash"      =>  $hash,
-    "new_hash"  =>  Password::verify($password, $hash),
-    "verify"    =>  Password::new_hash(),
+    "verify"    =>  Password::verify($password, $hash),
+    "new_hash"  =>  Password::new_hash(),
     "details"   =>  Password::get_details()
 ]);
 ```
@@ -490,27 +525,31 @@ array(5) {
   ["password"]=>
   string(10) "@QweRty17@"
   ["hash"]=>
-  string(94) "$if-1$a17$1$maSXnW36DcarZ5aHoW9RTgbHU0PQ$k.138hkpLHdvoNsD0NpnEuXArEaLKjNzhCb0rFUtGv0nBjN14eG.m"
-  ["new_hash"]=>
-  bool(true)
+  string(121) "$if-1$a33$1$J8c6q6Hz804pRUiB950SEQUEROSVBKNkJDSmROUnc9$V1U2ZWpELm90VVNzOWx6Mg$VJWOi8X9e8WVw+VTIkyzxoZwgtQeaoX3OUrUr6IsDZE"
   ["verify"]=>
-  string(94) "$if-1$a17$1$Tvb4ra+veaem88GAIXoq5QeitNPQ$fW5S1oHeHnrMSkenNVBTf.aeHeLgS0bhPzo.Uty8ZSQP1vhQamIii"
+  bool(true)
+  ["new_hash"]=>
+  string(121) "$if-1$a33$1$WzmMwomINKJFXs+DYSi3tgc0hlME1NV0JFbnNWbkE9$STZ6eHpwaXpKc283U2M0aQ$qsrPOgRtiT5mRtFjZVSd3ggrZ9jRK/IM4LHK90DFlQo"
   ["details"]=>
-  object(stdClass)#2 (6) {
+  object(stdClass)#3 (6) {
     ["library_name"]=>
     string(12) "IFEncryption"
     ["version"]=>
     string(3) "1.1"
     ["name"]=>
-    string(6) "BCRYPT"
+    string(7) "ARGON2I"
     ["algo"]=>
-    string(2) "2y"
+    string(7) "argon2i"
     ["algo_alias"]=>
-    string(3) "a17"
+    string(3) "a33"
     ["options"]=>
-    object(stdClass)#3 (1) {
-      ["cost"]=>
-      string(2) "10"
+    object(stdClass)#1 (3) {
+      ["time_cost"]=>
+      string(1) "3"
+      ["memory_cost"]=>
+      string(3) "128"
+      ["threads"]=>
+      string(1) "1"
     }
   }
 }
@@ -556,13 +595,13 @@ use IFaqih\IFEncryption\Password;
 
 $password = "@QweRty17@";
 
-$hash = Password::set_algo(PASSWORD_ARGON2I)->encrypt($password);
+$hash = Password::set_algo(PASSWORD_ARGON2I)->hash($password);
 
 var_dump([
     "password"  =>  $password,
     "hash"      =>  $hash,
-    "new_hash"  =>  Password::verify($password, $hash),
-    "verify"    =>  Password::new_hash(),
+    "verify"    =>  Password::verify($password, $hash),
+    "new_hash"  =>  Password::new_hash(),
     "details"   =>  Password::get_details()
 ]);
 ```
@@ -574,13 +613,13 @@ array(5) {
   ["password"]=>
   string(10) "@QweRty17@"
   ["hash"]=>
-  string(123) "$if-1$a33$1$29dpJNigh4yCAo/JR/ut1wSVBLNnBGM2RSMUdQMnc9PQ$SXlFZGlsUXljWXJkbldaRg$Q8ZLyL8ES9zbBt/AFf/ewrTWrC6dmKG7/xT36x0/Nq0"
-  ["new_hash"]=>
-  bool(true)
+  string(121) "$if-1$a33$1$jX+spw/1+h0oYXf7swevQgREU3Mm1FQzJXNDJrYWc9$Tzdxekl5eDNUS2MvTm9qRw$fLMUtlD7qMmx2QroW/Mi837GnRhRaKhwVOafKlLtEGY"
   ["verify"]=>
-  string(123) "$if-1$a33$1$gu9dJ6vVGa8eDrZ2dRnEegUHF6UFVCNU1Fb3Z1a0E9PQ$emo2Qk1OZUxxcjhjUHRNeQ$zegRjk0/fvyVOgMiVRdUtlbjElMKyPe2BS0PBBK/rGc"
+  bool(true)
+  ["new_hash"]=>
+  string(121) "$if-1$a33$1$HKW+qWoADBYc4YHlecWEmwdWZ6aWVuTDJjTGY1cnc9$c2FzR3JSVS91azFBeGxjMw$k32P/nyuPp/sUZ8e0yHYR+4hKruOjXKgk1M2lv2KYjc"
   ["details"]=>
-  object(stdClass)#1 (6) {
+  object(stdClass)#3 (6) {
     ["library_name"]=>
     string(12) "IFEncryption"
     ["version"]=>
@@ -592,7 +631,7 @@ array(5) {
     ["algo_alias"]=>
     string(3) "a33"
     ["options"]=>
-    object(stdClass)#2 (3) {
+    object(stdClass)#1 (3) {
       ["time_cost"]=>
       string(1) "7"
       ["memory_cost"]=>
@@ -644,14 +683,14 @@ use IFaqih\IFEncryption\Password;
 
 $password = "@QweRty17@";
 
-$hash = Password::encrypt($password);
+$hash = Password::hash($password);
 
 echo "<pre>";
 var_dump([
     "password"  =>  $password,
     "hash"      =>  $hash,
-    "new_hash"  =>  Password::verify($password, $hash),
-    "verify"    =>  Password::new_hash(),
+    "verify"    =>  Password::verify($password, $hash, REHASH_CONFIG),
+    "new_hash"  =>  Password::new_hash(),
     "details"   =>  Password::get_details()
 ]);
 ```
@@ -663,31 +702,31 @@ array(5) {
   ["password"]=>
   string(10) "@QweRty17@"
   ["hash"]=>
-  string(123) "$if-1$a71$1$Z4yFlCcF6Iw3bbATILltwwK1JOTEl0RXVZZjVTc2c9PQ$SmZoNDY2RjJaZjJBR08xcQ$4QffiL/xfGz+BI8BN3YhsozpQ2s0ojz51k3lHyO7sSA"
-  ["new_hash"]=>
-  bool(true)
+  string(121) "$if-1$a33$1$YFjx3IuQfzZSwMH6EPID/wYkhIT05iYVFlYTRPUXc9$VjZBeXo3UVlGMGpSZGJ2YQ$FGxqCE7egVbChGM6BkEQpAFvHCguqmDbKg5PZ+13eq0"
   ["verify"]=>
-  string(123) "$if-1$a71$1$3RlJTBNM5vOeKDB5HcW6eQang1UmdHL0wxUVQ4c0E9PQ$bHJKSWh5LzgyWnluVExGOA$J3py6UrVtRKxtubIF09f5fon5Bj9844YRFgQLyE2qfc"
+  bool(true)
+  ["new_hash"]=>
+  string(121) "$if-1$a71$1$P2QP9jegKuxPFSe3KzP/lwNWtzZzJ3TFBJaWhZVWc9$Wmtua1NQcndSdDk5czlaZg$5TUocfts4VHyo4y/1cP+AmhJMknWWZ5GGElilXHw3O4"
   ["details"]=>
-  object(stdClass)#2 (6) {
+  object(stdClass)#3 (6) {
     ["library_name"]=>
     string(12) "IFEncryption"
     ["version"]=>
     string(3) "1.1"
     ["name"]=>
-    string(8) "ARGON2ID"
+    string(7) "ARGON2I"
     ["algo"]=>
-    string(8) "argon2id"
+    string(7) "argon2i"
     ["algo_alias"]=>
-    string(3) "a71"
+    string(3) "a33"
     ["options"]=>
-    object(stdClass)#3 (3) {
+    object(stdClass)#2 (3) {
       ["time_cost"]=>
-      string(1) "5"
+      string(1) "3"
       ["memory_cost"]=>
-      string(3) "128"
+      string(3) "512"
       ["threads"]=>
-      string(1) "2"
+      string(1) "1"
     }
   }
 }
@@ -695,7 +734,7 @@ array(5) {
 
 ### Example 6:
 
-In this example the library will ignore the options in the config file and will apply the default options from php.
+In this example the library will only apply the algorithm in the configuration file while the options will be overridden by the default options from php.
 
 - config file:
 
@@ -733,49 +772,81 @@ use IFaqih\IFEncryption\Password;
 
 $password = "@QweRty17@";
 
-$hash = Password::set_default_options()->encrypt($password);
+$hash = Password::set_default_options()->hash($password);
 
 var_dump([
     "password"  =>  $password,
-    "hash"      =>  $hash,
-    "new_hash"  =>  Password::verify($password, $hash),
-    "verify"    =>  Password::new_hash(),
-    "details"   =>  Password::get_details()
+    "hash"      =>  [
+        "hash"      =>  $hash,
+        "verify"    =>  Password::verify($password, $hash, REHASH_CONFIG | REHASH_DEFAULT_OPTIONS),
+        "details"   =>  Password::get_details()
+    ],
+    "new_hash"  =>  [
+        "hash"      =>  Password::new_hash(),
+        "verify"    =>  Password::verify($password, Password::new_hash(), DONT_REHASH),
+        "details"   =>  Password::get_details()
+    ]
 ]);
 ```
 
 - result:
 
 ```h
-array(5) {
+array(3) {
   ["password"]=>
   string(10) "@QweRty17@"
   ["hash"]=>
-  string(123) "$if-1$a33$1$HLbwmapOMM3goQy612uavgVlZTaXpudHJoeXN0eWMydQ$dUFsR0YzQmlKTVBqOHQuaA$kOOl3/uj4POet72b2zw+RkOV3M6D3rSpX6ozhSYHJ4g"
+  array(3) {
+    ["hash"]=>
+    string(121) "$if-1$a17$1$/V.EIGg8+Ol6aQ19Z9sSQ+MSxErw+J/RZvl1cwdytj$Rky.t0f5+4Bb.VCsOXOKDL$FI0meC0X1m0e/v83y5RRrQzLSyrz/qCbJb7bvskvEzC"
+    ["verify"]=>
+    bool(true)
+    ["details"]=>
+    object(stdClass)#3 (6) {
+      ["library_name"]=>
+      string(12) "IFEncryption"
+      ["version"]=>
+      string(3) "1.1"
+      ["name"]=>
+      string(6) "BCRYPT"
+      ["algo"]=>
+      string(2) "2y"
+      ["algo_alias"]=>
+      string(3) "a17"
+      ["options"]=>
+      object(stdClass)#2 (1) {
+        ["cost"]=>
+        string(2) "10"
+      }
+    }
+  }
   ["new_hash"]=>
-  bool(true)
-  ["verify"]=>
-  string(123) "$if-1$a33$1$tOY9gQTqvDC1EPYzN6wIIwaVc3R252QVpYVU1MWTI4eg$VDZVbVFNSFFyamNDeFFYWA$2M40tBCYXQO2xb57nDchOj65G/K2ZzmkHBc/vg4zDR8"
-  ["details"]=>
-  object(stdClass)#2 (6) {
-    ["library_name"]=>
-    string(12) "IFEncryption"
-    ["version"]=>
-    string(3) "1.1"
-    ["name"]=>
-    string(7) "ARGON2I"
-    ["algo"]=>
-    string(7) "argon2i"
-    ["algo_alias"]=>
-    string(3) "a33"
-    ["options"]=>
-    object(stdClass)#3 (3) {
-      ["time_cost"]=>
-      string(1) "4"
-      ["memory_cost"]=>
-      string(5) "65536"
-      ["threads"]=>
-      string(1) "1"
+  array(3) {
+    ["hash"]=>
+    string(123) "$if-1$a33$1$g5o0gHM1LD7ydpOkGB71NwYjJCOFBXaVNKZTRWb3lhUA$NFd6LnJ1d1RxZHhSV3cxUw$Le/64GIMIvRiQRjYZsVtA7wlqJ0h7ZEluuUF0zKDcKM"
+    ["verify"]=>
+    bool(true)
+    ["details"]=>
+    object(stdClass)#5 (6) {
+      ["library_name"]=>
+      string(12) "IFEncryption"
+      ["version"]=>
+      string(3) "1.1"
+      ["name"]=>
+      string(7) "ARGON2I"
+      ["algo"]=>
+      string(7) "argon2i"
+      ["algo_alias"]=>
+      string(3) "a33"
+      ["options"]=>
+      object(stdClass)#4 (3) {
+        ["time_cost"]=>
+        string(1) "4"
+        ["memory_cost"]=>
+        string(5) "65536"
+        ["threads"]=>
+        string(1) "1"
+      }
     }
   }
 }
@@ -796,49 +867,81 @@ $hash = Password::set_rand_algo([
     PASSWORD_BCRYPT,
     PASSWORD_ARGON2I,
     PASSWORD_ARGON2ID
-])->set_default_options()->encrypt($password);
+])->set_default_options()->hash($password);
 
 var_dump([
     "password"  =>  $password,
-    "hash"      =>  $hash,
-    "new_hash"  =>  Password::verify($password, $hash),
-    "verify"    =>  Password::new_hash(),
-    "details"   =>  Password::get_details()
+    "hash"      =>  [
+        "hash"      =>  $hash,
+        "verify"    =>  Password::verify($password, $hash, REHASH_RAND_ALL_ALGO | REHASH_DEFAULT_OPTIONS),
+        "details"   =>  Password::get_details()
+    ],
+    "new_hash"  =>  [
+        "hash"      =>  Password::new_hash(),
+        "verify"    =>  Password::verify($password, Password::new_hash(), DONT_REHASH),
+        "details"   =>  Password::get_details()
+    ]
 ]);
 ```
 
 - result:
 
 ```h
-array(5) {
+array(3) {
   ["password"]=>
   string(10) "@QweRty17@"
   ["hash"]=>
-  string(123) "$if-1$a33$1$eICf/Jb8+Ejl+ewPSaWwkQd2p5TFNwVHZJVDErbXY1SQ$NFZHR1pyaHdwYXJUdzg2Rg$I2gGt7x8OISUahLfu125EtKVTjunb8bCrhK0egsI1OQ"
+  array(3) {
+    ["hash"]=>
+    string(123) "$if-1$a33$1$Q8TNFrS1PvYBD3RTR19n5QaU42SjhwZnA2MUJkY2Y0WA$ekZpUnZ3eWNvL0I0RzhJMA$aufVjM1LXN/dbJI9r7ChgNuGkohex/lyb7BKFeD8nQ0"
+    ["verify"]=>
+    bool(true)
+    ["details"]=>
+    object(stdClass)#3 (6) {
+      ["library_name"]=>
+      string(12) "IFEncryption"
+      ["version"]=>
+      string(3) "1.1"
+      ["name"]=>
+      string(7) "ARGON2I"
+      ["algo"]=>
+      string(7) "argon2i"
+      ["algo_alias"]=>
+      string(3) "a33"
+      ["options"]=>
+      object(stdClass)#2 (3) {
+        ["time_cost"]=>
+        string(1) "4"
+        ["memory_cost"]=>
+        string(5) "65536"
+        ["threads"]=>
+        string(1) "1"
+      }
+    }
+  }
   ["new_hash"]=>
-  bool(true)
-  ["verify"]=>
-  string(123) "$if-1$a33$1$Fo2rYOIS/0oxOkHbFD5ZzQbEhianBaYVFiMy95Nm9SNQ$M0ZaVTMzL25xeXNZYjhRVQ$Wzhf5HNT4TtrZ96Eqs/8Z3AnLi+FXDYYSAfSV19DGXw"
-  ["details"]=>
-  object(stdClass)#2 (6) {
-    ["library_name"]=>
-    string(12) "IFEncryption"
-    ["version"]=>
-    string(3) "1.1"
-    ["name"]=>
-    string(7) "ARGON2I"
-    ["algo"]=>
-    string(7) "argon2i"
-    ["algo_alias"]=>
-    string(3) "a33"
-    ["options"]=>
-    object(stdClass)#3 (3) {
-      ["time_cost"]=>
-      string(1) "4"
-      ["memory_cost"]=>
-      string(5) "65536"
-      ["threads"]=>
-      string(1) "1"
+  array(3) {
+    ["hash"]=>
+    string(121) "$if-1$a17$1$+sdGAqt1fEg.Z/vwEQk1K9SGhQ8q78l0DinyzgNnRV$G1Um.RP2ZnWQ4NzTDHnD6t$V0P7kIVPmzc.UXRrGRHbemO77/dLqMpsH0/9PaCp0lS"
+    ["verify"]=>
+    bool(true)
+    ["details"]=>
+    object(stdClass)#4 (6) {
+      ["library_name"]=>
+      string(12) "IFEncryption"
+      ["version"]=>
+      string(3) "1.1"
+      ["name"]=>
+      string(6) "BCRYPT"
+      ["algo"]=>
+      string(2) "2y"
+      ["algo_alias"]=>
+      string(3) "a17"
+      ["options"]=>
+      object(stdClass)#5 (1) {
+        ["cost"]=>
+        string(2) "10"
+      }
     }
   }
 }

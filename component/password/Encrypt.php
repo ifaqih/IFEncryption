@@ -37,15 +37,15 @@ class Encrypt extends Main
                         $iv = openssl_random_pseudo_bytes(static::$iv_length);
                         $encrypt = openssl_encrypt($value, static::password_cost_hash_method, base64_encode("\$A17=@" . $_this . ";\$a=bcrypt"), 0, $iv);
                         $encrypt = base64_encode($encrypt);
-                        $encrypt = substr($encrypt, 0, -2) . str_replace("=", "", substr($encrypt, -2));
-                        $hash .= "\$a17$" . static::minor . "$" . substr(base64_encode($iv), 0, -2) . $encrypt;
+                        $encrypt = substr($encrypt, 0, -4) . str_replace("PQ", "", str_replace("=", "", substr($encrypt, -4)));
+                        $hash .= "\$a17$" . static::minor . "$" . self::rand_string(16) . substr(base64_encode($iv), 0, -2) . $encrypt;
                     } else {
                         $v = preg_replace("/[^0-9]/", "", $value);
                     }
                     break;
                 case 3:
                     if (static::$options['algo'] === PASSWORD_BCRYPT) {
-                        $hash .= "$" . $value;
+                        $hash .= "$" . self::rand_string(12) . substr($value, 0, 10) . "$" . substr($value, 10);
                     } else {
                         $value = preg_replace("/[^0-9,]/", "", $value);
                         $value = $v . "," . $value;
@@ -53,7 +53,7 @@ class Encrypt extends Main
                         $iv = openssl_random_pseudo_bytes(static::$iv_length);
                         $encrypt = openssl_encrypt($value, static::password_cost_hash_method, base64_encode("\$A" . ((static::$options['algo'] === PASSWORD_ARGON2I) ? "33" : "71") . "=@" . $_this . ";\$a=" . static::$options['algo']), 0, $iv);
                         $encrypt = base64_encode($encrypt);
-                        $encrypt = substr($encrypt, 0, -2) . str_replace("=", "", substr($encrypt, -2));
+                        $encrypt = substr($encrypt, 0, -4) . str_replace("PQ", "", str_replace("=", "", substr($encrypt, -4)));
                         $hash .= "\$a" . ((static::$options['algo'] === PASSWORD_ARGON2I) ? "33" : "71") . "$" . static::minor . "$" . substr(base64_encode($iv), 0, -2) . $encrypt;
                     }
                     break;
@@ -64,5 +64,10 @@ class Encrypt extends Main
         }
 
         return $hash;
+    }
+
+    private static function rand_string(int $length): string
+    {
+        return substr(base64_encode(openssl_random_pseudo_bytes($length)), 0, $length);
     }
 }

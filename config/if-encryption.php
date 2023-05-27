@@ -4,7 +4,7 @@ return [
     [
         'algo'      =>  PASSWORD_BCRYPT,
         'options'   =>  [
-            'cost'      =>  10
+            'cost'          =>  7
         ]
     ],
     [

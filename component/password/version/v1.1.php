@@ -52,6 +52,7 @@ class PasswordDoc extends AbstractVersion
                     $existingHash = $existingHash;
                     break;
                 case 2:
+                    $value = ($algo === PASSWORD_BCRYPT) ? substr($value, 16) : $value;
                     $iv_length = strlen(base64_encode(openssl_random_pseudo_bytes(openssl_cipher_iv_length(static::cost_hash_method)))) - 2;
                     $iv = base64_decode(substr($value, 0, $iv_length) . "==");
                     $cost = substr($value, $iv_length);
@@ -72,7 +73,7 @@ class PasswordDoc extends AbstractVersion
                     }
                     break;
                 default:
-                    $existingHash .= "$" . $value;
+                    $existingHash .= (($algo === PASSWORD_BCRYPT) ? ($key === 3 ? "$" . substr($value, -10) : $value) : "$" . $value);
                     break;
             }
         }

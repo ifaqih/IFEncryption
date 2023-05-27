@@ -27,5 +27,5 @@ abstract class AbstractPassword
         static::$config = require file_exists(__DIR__ . "/../../../../config/if-encryption.php") ? __DIR__ . "/../../../../config/if-encryption.php" : (file_exists(__DIR__ . "/../config/if-encryption.php") ? __DIR__ . "/../config/if-encryption.php" : throw new Exception("config/if-encryption.php not found!"));
     }
 
-    abstract public static function encrypt(string $str);
+    abstract public static function hash(string $str);
 }

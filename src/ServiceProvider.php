@@ -21,7 +21,7 @@ class ServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 $source => config_path('if-encryption.php'),
-            ]);
+            ], "if-encryption-config");
         }
 
         $this->mergeConfigFrom($source, 'if-encryption');

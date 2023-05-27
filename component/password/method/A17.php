@@ -31,7 +31,7 @@ class A17 extends AbstractMethod
         }
         static::$options['options'] = ["cost" => $options];
 
-        return $this;
+        return self::getInstance();
     }
 
     /**
@@ -40,7 +40,7 @@ class A17 extends AbstractMethod
      * @param string $algo Algorithm to be used.
      * @return \IFaqih\IFEncryption\Component\Password\Main
      * @throws \Exception
-     * @method \IFaqih\IFEncryption\Component\Password\Main encrypt(string $str): string|false
+     * @method \IFaqih\IFEncryption\Component\Password\Main hash(string $str): string|false
      */
     public function cost(int $cost): object
     {
